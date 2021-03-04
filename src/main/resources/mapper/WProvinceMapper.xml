@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzu.sourcecode.mapper.WProvinceMapper">
+
+    <resultMap type="WProvince" id="WProvinceResult">
+        <result property="proid"    column="PROID"    />
+        <result property="proname"    column="PRONAME"    />
+        <result property="parproid"    column="PARPROID"    />
+        <result property="proartdesc"    column="PROARTDESC"    />
+        <result property="powercon"    column="POWERCON"    />
+    </resultMap>
+
+    <sql id="selectWProvinceVo">
+        select PROID, PRONAME, PARPROID, PROARTDESC, POWERCON from W_PROVINCE
+    </sql>
+
+    <select id="selectWProvinceList" parameterType="WProvince" resultMap="WProvinceResult">
+        <include refid="selectWProvinceVo"/>
+        <where>
+            <if test="proname != null  and proname != ''"> and PRONAME like concat('%', #{proname}, '%')</if>
+            <if test="parproid != null  and parproid != ''"> and PARPROID = #{parproid}</if>
+            <if test="proartdesc != null  and proartdesc != ''"> and PROARTDESC = #{proartdesc}</if>
+            <if test="powercon != null  and powercon != ''"> and POWERCON = #{powercon}</if>
+        </where>
+    </select>
+
+    <select id="selectWProvinceById" parameterType="String" resultMap="WProvinceResult">
+        <include refid="selectWProvinceVo"/>
+        where PROID = #{proid}
+    </select>
+
+    <insert id="insertWProvince" parameterType="WProvince">
+        insert into W_PROVINCE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="proid != null">PROID,</if>
+            <if test="proname != null">PRONAME,</if>
+            <if test="parproid != null">PARPROID,</if>
+            <if test="proartdesc != null">PROARTDESC,</if>
+            <if test="powercon != null">POWERCON,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="proid != null">#{proid},</if>
+            <if test="proname != null">#{proname},</if>
+            <if test="parproid != null">#{parproid},</if>
+            <if test="proartdesc != null">#{proartdesc},</if>
+            <if test="powercon != null">#{powercon},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWProvince" parameterType="WProvince">
+        update W_PROVINCE
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="proname != null">PRONAME = #{proname},</if>
+            <if test="parproid != null">PARPROID = #{parproid},</if>
+            <if test="proartdesc != null">PROARTDESC = #{proartdesc},</if>
+            <if test="powercon != null">POWERCON = #{powercon},</if>
+        </trim>
+        where PROID = #{proid}
+    </update>
+
+    <delete id="deleteWProvinceById" parameterType="String">
+        delete from W_PROVINCE where PROID = #{proid}
+    </delete>
+
+    <delete id="deleteWProvinceByIds" parameterType="String">
+        delete from W_PROVINCE where PROID in
+        <foreach item="proid" collection="array" open="(" separator="," close=")">
+            #{proid}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <style>
+        #left {
+            width: 300px;
+            height: 900px;
+            border: black 1px solid;
+            float: left;
+        }
+        #right {
+            width: 1500px;
+            height: 900px;
+            border: black 1px solid;
+            display: inline-block;
+            margin-left: 16px;
+        }
+        .Heads {
+            background-color: #ccecff;
+            line-height: 30px;
+            font-weight: bolder;
+            border-bottom: black 1px solid;
+        }
+        #rightHeadCont {
+            background-color: darkseagreen;
+            border-bottom: black 1px solid;
+        }
+        .buttonOne {
+            height: 30px;
+            width: 144px;
+            border: aqua 1px solid;
+        }
+        #if1 {
+            border: black 1px solid;
+            height: 722px;
+            width: 450px;
+            float: left;
+        }
+        #if2 {
+            display: inline-block;
+            width: 600px;
+        }
+        .huiC {
+            border-top: #cfcccc 2px solid;
+            border-bottom: #cfcccc 2px solid;
+            background-color: #f1f1f1;
+        }
+        .huiC2 {
+            background-color: #f8f8f8;
+        }
+        .huiC3 {
+            border: #6f6f6f 2px solid;
+        }
+        /*#rightHead {*/
+        /*    background-color: #ccecff;*/
+        /*    font-weight: bolder;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div id="left">
+    <div class="Heads">
+        组织结构
+    </div>
+    <div id="leftFoot">
+        <ul id="leftUL" style="list-style-type:none">
+            <li><img src="img/img3.png">国家电网
+                <ul id="company" style="list-style-type:none">
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="right">
+    <div class="Heads">
+        <span>网省信息</span>
+    </div>
+    <div id="rightHeadCont">
+        <span style="margin-right: 7px">网省名称：</span><input type="text" value="国家电网" readonly><br>
+        <span>*上级单位：</span><input type="text" value="" readonly><br>
+        <span style="margin-right: 7px">单位描述：</span><input type="text" value="北京西单" readonly><br>
+        <span style="margin-right: 22px">用电量：</span><input type="text" value="234245" readonly><br>
+        <br>
+    </div>
+    <div class="Heads" style="padding-bottom: 3px">
+        <span>设备管理</span>
+    </div>
+    <div>
+        <div id="if1">
+            <div style="padding: 3px">
+                <input class="buttonOne" type="button" value="新建" onclick="test()">
+                <input class="buttonOne" type="button" value="编辑">
+                <input class="buttonOne" type="button" value="删除">
+            </div>
+            <div class="huiC">
+                <span style="font-size: 20px">变电站名称：</span>
+                <input type="text">
+                <input style="margin-left:16px;width: 40px;height: 30px" type="button" value="查询">
+                <input style="margin-left:16px;width: 40px;height: 30px" type="button" value="重置">
+            </div>
+            <div class="huiC2">变电站名称</div>
+            <div class="huiC3">留白</div>
+        </div>
+        <div id="if2">
+            <div>
+                <input class="buttonOne" type="button" value="新建">
+                <input class="buttonOne" type="button" value="编辑">
+                <input class="buttonOne" type="button" value="删除">
+            </div>
+            <div class="huiC">
+                设备名称：<input type="text">
+                设备类型：<select><option value ="null">请选择</option></select>
+                是否再用：<select><option value ="null">请选择</option></select>
+                是否已维修：<select><option value ="null">请选择</option></select>
+                <input type="button" value="查询">
+                <input type="button" value="重置">
+            </div>
+            <div class="huiC2">
+                <span>设备名称</span>
+                <span>设备类型</span>
+                <span>是否再用</span>
+                <span>是否已维修</span>
+            </div>
+            <div class="huiC3">留白</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $.ajax({
+            url: "http://localhost:8081/vice/list",
+            // data: {name: 'jenny'},
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+                console.log(data.data)
+                $.each(data.data,function (i,n){
+                    console.log(i+":"+n.proname)
+                    $("#company").append("<li><img src=\"img/img5.png\">"+n.proname+"</li>")
+                })
+            }
+        });
+
+    })
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzu.sourcecode.mapper.WEquipmentMapper">
+
+    <resultMap type="WEquipment" id="WEquipmentResult">
+        <result property="objId"    column="OBJ_ID"    />
+        <result property="mc"    column="MC"    />
+        <result property="azrq"    column="AZRQ"    />
+        <result property="sblx"    column="SBLX"    />
+        <result property="sfzy"    column="SFZY"    />
+        <result property="ssbm"    column="SSBM"    />
+        <result property="sfwx"    column="SFWX"    />
+        <result property="sysm"    column="SYSM"    />
+    </resultMap>
+
+    <sql id="selectWEquipmentVo">
+        select OBJ_ID, MC, AZRQ, SBLX, SFZY, SSBM, SFWX, SYSM from W_EQUIPMENT
+    </sql>
+
+    <select id="selectWEquipmentList" parameterType="WEquipment" resultMap="WEquipmentResult">
+        <include refid="selectWEquipmentVo"/>
+        <where>
+            <if test="mc != null  and mc != ''"> and MC = #{mc}</if>
+            <if test="azrq != null "> and AZRQ = #{azrq}</if>
+            <if test="sblx != null  and sblx != ''"> and SBLX = #{sblx}</if>
+            <if test="sfzy != null  and sfzy != ''"> and SFZY = #{sfzy}</if>
+            <if test="ssbm != null  and ssbm != ''"> and SSBM = #{ssbm}</if>
+            <if test="sfwx != null  and sfwx != ''"> and SFWX = #{sfwx}</if>
+            <if test="sysm != null  and sysm != ''"> and SYSM = #{sysm}</if>
+        </where>
+    </select>
+
+    <select id="selectWEquipmentById" parameterType="String" resultMap="WEquipmentResult">
+        <include refid="selectWEquipmentVo"/>
+        where OBJ_ID = #{objId}
+    </select>
+
+    <insert id="insertWEquipment" parameterType="WEquipment">
+        insert into W_EQUIPMENT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="objId != null">OBJ_ID,</if>
+            <if test="mc != null">MC,</if>
+            <if test="azrq != null">AZRQ,</if>
+            <if test="sblx != null">SBLX,</if>
+            <if test="sfzy != null">SFZY,</if>
+            <if test="ssbm != null">SSBM,</if>
+            <if test="sfwx != null">SFWX,</if>
+            <if test="sysm != null">SYSM,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="objId != null">#{objId},</if>
+            <if test="mc != null">#{mc},</if>
+            <if test="azrq != null">#{azrq},</if>
+            <if test="sblx != null">#{sblx},</if>
+            <if test="sfzy != null">#{sfzy},</if>
+            <if test="ssbm != null">#{ssbm},</if>
+            <if test="sfwx != null">#{sfwx},</if>
+            <if test="sysm != null">#{sysm},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWEquipment" parameterType="WEquipment">
+        update W_EQUIPMENT
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mc != null">MC = #{mc},</if>
+            <if test="azrq != null">AZRQ = #{azrq},</if>
+            <if test="sblx != null">SBLX = #{sblx},</if>
+            <if test="sfzy != null">SFZY = #{sfzy},</if>
+            <if test="ssbm != null">SSBM = #{ssbm},</if>
+            <if test="sfwx != null">SFWX = #{sfwx},</if>
+            <if test="sysm != null">SYSM = #{sysm},</if>
+        </trim>
+        where OBJ_ID = #{objId}
+    </update>
+
+    <delete id="deleteWEquipmentById" parameterType="String">
+        delete from W_EQUIPMENT where OBJ_ID = #{objId}
+    </delete>
+
+    <delete id="deleteWEquipmentByIds" parameterType="String">
+        delete from W_EQUIPMENT where OBJ_ID in
+        <foreach item="objId" collection="array" open="(" separator="," close=")">
+            #{objId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <style>
+        div {
+            background-color: red;
+            width: 200px;
+            height: 200px;
+            border: solid 1px #000000;
+        }
+    </style>
+    <script>
+        var btn1 = document.getElementById("btn")
+        var jqureyBtn1 = $(btn1)
+        jqureyBtn1.html()
+        $(function() {
+            $("#btn").click(function() {
+                // if ($(this).next().is(":hidden")){
+                //     $(this).next().slideDown(2000);
+                //
+                // }else {
+                //     $(this).next().slideUp(2000);
+                // }
+                //简写
+                $(this).next().slideToggle(2000);
+            })
+        })
+    </script>
+</head>
+<body>
+    <input type="button" value="dianwo" id="btn">
+    <div></div>
+</body>
+</html>

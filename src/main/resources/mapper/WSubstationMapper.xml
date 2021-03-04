@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzu.sourcecode.mapper.WSubstationMapper">
+
+    <resultMap type="WSubstation" id="WSubstationResult">
+        <result property="id"    column="ID"    />
+        <result property="proid"    column="PROID"    />
+        <result property="wSubstationmc"    column="W_SUBSTATIONMC"    />
+    </resultMap>
+
+    <sql id="selectWSubstationVo">
+        select ID, PROID, W_SUBSTATIONMC from W_SUBSTATION
+    </sql>
+
+    <select id="selectWSubstationList" parameterType="WSubstation" resultMap="WSubstationResult">
+        <include refid="selectWSubstationVo"/>
+        <where>
+            <if test="id != null  and id != ''"> and ID = #{id}</if>
+            <if test="proid != null  and proid != ''"> and PROID = #{proid}</if>
+            <if test="wSubstationmc != null  and wSubstationmc != ''"> and W_SUBSTATIONMC = #{wSubstationmc}</if>
+        </where>
+    </select>
+
+    <select id="selectWSubstationById" parameterType="String" resultMap="WSubstationResult">
+        <include refid="selectWSubstationVo"/>
+        where ID = #{id}
+    </select>
+
+    <insert id="insertWSubstation" parameterType="WSubstation">
+        insert into W_SUBSTATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">ID,</if>
+            <if test="proid != null">PROID,</if>
+            <if test="wSubstationmc != null">W_SUBSTATIONMC,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="proid != null">#{proid},</if>
+            <if test="wSubstationmc != null">#{wSubstationmc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWSubstation" parameterType="WSubstation">
+        update W_SUBSTATION
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="proid != null">PROID = #{proid},</if>
+            <if test="wSubstationmc != null">W_SUBSTATIONMC = #{wSubstationmc},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+
+    <delete id="deleteWSubstationById" parameterType="String">
+        delete from W_SUBSTATION where ID = #{id}
+    </delete>
+
+    <delete id="deleteWSubstationByIds" parameterType="String">
+        delete from W_SUBSTATION where ID in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

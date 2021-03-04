@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <style>
+        div {
+            background-color: red;
+            width: 200px;
+            height: 200px;
+            border: solid 1px #000000;
+        }
+    </style>
+    <script>
+        $(function() {
+            $("#btn").click(function() {
+                // if ($(this).next().is(":hidden")) {
+                //     $(this).next().show();
+                // } else {
+                //     $(this).next().hide();
+                // }
+                $(this).next().toggle(1000);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <input type="button" value="dianwo" id="btn">
+    <div></div>
+</body>
+
+</html>
