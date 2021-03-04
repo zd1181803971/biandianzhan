@@ -146,6 +146,14 @@
             background-color: #6f6f6f;
 
         }
+        .imgAdd {
+            width: 30px;
+            height: 23px;
+            position: fixed;
+            left: 270px;
+            top: 50px;
+            cursor: pointer;
+        }
         /*#rightHead {*/
         /*    background-color: #ccecff;*/
         /*    font-weight: bolder;*/
@@ -159,7 +167,7 @@
     </div>
     <div id="leftFoot">
         <ul id="leftUL" style="list-style-type:none">
-            <li><img src="img/img3.png"><span style="font-weight: bolder;font-size: 18px;cursor: pointer;" onclick="showDW()">国家电网</span>
+            <li><img src="img/img3.png"><span style="font-weight: bolder;font-size: 18px;cursor: pointer;" onclick="showDW()">国家电网</span><img class="imgAdd" onclick="addPro()" src="img/img.png">
                 <ul id="company" style="list-style-type:none">
                 </ul>
             </li>
@@ -184,14 +192,14 @@
         <div id="if1">
             <div style="padding: 3px">
                 <input class="buttonOne" type="submit" value="新建" onclick="addSub()">
-                <input class="buttonOne" type="button" value="编辑">
-                <input class="buttonOne" type="button" value="删除">
+                <input class="buttonOne" type="submit" value="编辑" onclick="updateSub()">
+                <input class="buttonOne" type="submit" value="删除" onclick="delSub()">
             </div>
             <div class="huiC">
                 <span style="font-size: 20px">变电站名称：</span>
-                <input type="text">
-                <input style="margin-left:16px;width: 40px;height: 30px" type="button" value="查询">
-                <input style="margin-left:16px;width: 40px;height: 30px" type="button" value="重置">
+                <input id="subNameBTN" type="text">
+                <input style="margin-left:16px;width: 40px;height: 30px" type="button" onclick="getSubByName()" value="查询">
+                <input style="margin-left:16px;width: 40px;height: 30px" type="button" onclick="clearSub()" value="重置">
             </div>
             <div class="huiC2">变电站名称</div>
             <div id="subList">
@@ -224,20 +232,118 @@
         </div>
     </div>
 </div>
+<div id="hideAddPro" style="display: none">添加公司留白</div>
 <script>
     const Surl = "http://localhost:8081";
     var proId;//当前的公司id
     var subId;//当前供电站id
 
+    //添加公司
+    function addPro(){
+        $("#right").hide()
+        $("#hideAddPro").show()
 
+    }
+
+    //供电所查询
+    function getSubByName(){
+        if (proId === undefined){
+            alert("请先选择公司！")
+        }else{
+            var name = $("#subNameBTN").val()
+            if(name !== null){
+                $.ajax({
+                    url: Surl+"/sub/list",
+                    type: "get",
+                    dataType: "json",
+                    success: function(data) {
+                        $.each(data.data,function (i,n){
+                            if (n.wSubstationmc == name && n.proid == proId){
+                                $("#subList").html(null)
+                                $("#subList").append("<div id="+"subCk"+ n.id +" class=\"huiC3\" onclick=\"getEquBySubID("+n.id+")\">"+n.wSubstationmc+"</div>")
+                            }else {
+                                $("#subList").html(null)
+                            }
+                        })
+                    }
+                });
+            }else {
+                alert("请输入供电站名称！")
+            }
+        }
+    }
+    //供电站查询重置
+    function clearSub(){
+        console.log("clear")
+        getSubByProId(proId)
+    }
+    //删除供电站
+    function delSub(){
+        if (proId === undefined){
+            alert("请先选择公司！")
+        }else if(subId === undefined){
+            alert("请先选择供电站！")
+        }
+        else
+        {
+            let SubName = null;
+            $.ajax({
+                url: Surl+"/sub/"+subId,
+                type: "get",
+                contentType:"application/json",
+                dataType: "json",
+                success: function(data) {
+                    SubName = data.data.wSubstationmc
+                    console.log(SubName)
+                    if (confirm("确定要删除："+SubName+"吗")){
+                        $.ajax({
+                            url: Surl+"/sub/del/"+subId,
+                            type: "post",
+                            contentType:"application/json",
+                            dataType: "json",
+                            success: function(data) {
+                                getSubByProId(proId)
+                            }
+                        })
+                    }
+                }
+            });
+
+        }
+    }
+    //修改供电站
+    function  updateSub(){
+        if (proId === undefined){
+            alert("请先选择公司！")
+        }else if(subId === undefined){
+            alert("请先选择供电站！")
+        }
+        else
+        {
+            var subName  =  prompt("请更改变电站名称：")
+            var te = {"id": subId,"proid": proId,"wSubstationmc": subName}
+            if (subName !== null){
+                $.ajax({
+                    url: Surl+"/sub/update",
+                    data: JSON.stringify(te),
+                    type: "post",
+                    contentType:"application/json",
+                    dataType: "json",
+                    success: function(data) {
+                        getSubByProId(proId)
+                    }
+                });
+            }else {
+                alert("请输入名称")
+            }
+        }
+    }
+    //添加供电站
     function addSub(){
-        if (proId == undefined){
+        if (proId === undefined){
             alert("请先选择公司！")
         }else {
             var subName  =  prompt("请输入变电站名称：")
-            console.log(subName)
-            console.log(proId)
-            console.log(subId)
             var te = {"proid": proId,"wSubstationmc": subName}
             if (subName !== null){
                 $.ajax({
@@ -247,6 +353,7 @@
                     contentType:"application/json",
                     dataType: "json",
                     success: function(data) {
+                        getSubByProId(proId)
                     }
                 });
             }else {
@@ -260,6 +367,17 @@
     }
     //通过供电站获取其下的设备
     function getEquBySubID(i){
+        //清空样式，只能选一个
+        $("#subList div").each(function (i,item){
+            $(item).removeClass("subListBK")
+        })
+        //添加选中背景
+        var val = "subCk"+i
+        if ($("#"+val).hasClass("subListBK")){
+            $("#"+val).removeClass("subListBK")
+        }else{
+            $("#"+val).addClass("subListBK")
+        }
         subId = i;
         $("#equList").html(null)
         $.ajax({
@@ -285,7 +403,6 @@
             type: "get",
             dataType: "json",
             success: function(data) {
-                console.log(data.data)
                 $("#input1").attr("value",data.data.proname)
                 $("#input2").attr("value",data.data.parproid)
                 $("#input3").attr("value",data.data.proartdesc)
@@ -299,10 +416,11 @@
             dataType: "json",
             success: function(data) {
                 $.each(data.data,function (i,n){
-                  $("#subList").append("<div class=\"huiC3\" onclick=\"getEquBySubID("+n.id+")\">"+n.wSubstationmc+"</div>")
+                  $("#subList").append("<div id="+"subCk"+ n.id +" class=\"huiC3\" onclick=\"getEquBySubID("+n.id+")\">"+n.wSubstationmc+"</div>")
                 })
             }
         });
+
     }
     //加载左侧电力公司列表
     $(function() {
@@ -312,7 +430,6 @@
             type: "get",
             dataType: "json",
             success: function(data) {
-                console.log(data)
                 $.each(data.data,function (i,n){
                     if (n.parproid !== null){
                         $("#company").append("<li onclick=\"getSubByProId("+n.proid+")\"><img src=\"img/img5.png\">"+n.proname+"</li>")

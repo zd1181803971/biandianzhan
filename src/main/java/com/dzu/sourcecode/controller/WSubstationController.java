@@ -21,29 +21,23 @@ public class WSubstationController
     @Autowired
     private IWSubstationService wSubstationService;
 
-    /**
-     * 查询【请填写功能名称】列表
-     */
 
-
+    //根据公司获取其下所有的供电站
     @GetMapping("/proId/{pid}")
     public AjaxResult getSubByProId(@PathVariable("pid") String pid){
         List<WSubstation> subByProId = wSubstationService.getSubByProId(pid);
         return AjaxResult.success(subByProId);
     }
 
+    //获取所有
     @GetMapping("/list")
     public AjaxResult list(WSubstation wSubstation)
     {
         List<WSubstation> wSubstations = wSubstationService.selectWSubstationList(wSubstation);
         return AjaxResult.success(wSubstations);
     }
-
-
-
-
     /**
-     * 获取【请填写功能名称】详细信息
+     * 获取某个
      */
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
@@ -52,7 +46,7 @@ public class WSubstationController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增
      */
     @PostMapping
     public AjaxResult add(@RequestBody WSubstation wSubstation)
@@ -76,9 +70,9 @@ public class WSubstationController
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改
      */
-    @PutMapping
+    @PostMapping("/update")
     public AjaxResult edit(@RequestBody WSubstation wSubstation)
     {
         int i = wSubstationService.updateWSubstation(wSubstation);
@@ -90,12 +84,12 @@ public class WSubstationController
     }
 
     /**
-     * 删除【请填写功能名称】
+     * 删除
      */
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable String[] ids)
+	@PostMapping("/del/{id}")
+    public AjaxResult remove(@PathVariable("id") String id)
     {
-        int i = wSubstationService.deleteWSubstationByIds(ids);
+        int i = wSubstationService.deleteWSubstationById(id);
         if (i>0){
             return AjaxResult.success();
         }else {
