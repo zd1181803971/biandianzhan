@@ -57,6 +57,16 @@ public class WSubstationController
     @PostMapping
     public AjaxResult add(@RequestBody WSubstation wSubstation)
     {
+
+        int subID = 0;
+        List<WSubstation> wSubstations = wSubstationService.selectWSubstationList(new WSubstation());
+        for (WSubstation sub: wSubstations
+             ) {
+            if ( Integer.parseInt(sub.getId()) > subID){
+                subID = Integer.parseInt(sub.getId());
+            }
+        }
+        wSubstation.setId(String.valueOf(subID+1));
         int i = wSubstationService.insertWSubstation(wSubstation);
         if (i>0){
             return AjaxResult.success();
