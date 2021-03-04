@@ -92,4 +92,9 @@ public class WEquipmentServiceImpl implements IWEquipmentService
     {
         return wEquipmentMapper.deleteWEquipmentById(objId);
     }
+
+    @Override
+    public List<WEquipment> getEquBySSBM(String sid) {
+        return wEquipmentMapper.getEquBySSBM(sid);
+    }
 }

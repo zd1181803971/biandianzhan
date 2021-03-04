@@ -61,4 +61,6 @@ public interface WSubstationMapper
      * @return 结果
      */
     public int deleteWSubstationByIds(String[] ids);
+
+    List<WSubstation> getSubByProId(String pid);
 }

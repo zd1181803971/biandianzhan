@@ -59,4 +59,6 @@ public interface IWEquipmentService
      * @return 结果
      */
     public int deleteWEquipmentById(String objId);
+
+    List<WEquipment> getEquBySSBM(String sid);
 }

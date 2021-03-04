@@ -91,4 +91,9 @@ public class WSubstationServiceImpl implements IWSubstationService
     {
         return wSubstationMapper.deleteWSubstationById(id);
     }
+
+    @Override
+    public List<WSubstation> getSubByProId(String pid) {
+        return wSubstationMapper.getSubByProId(pid);
+    }
 }

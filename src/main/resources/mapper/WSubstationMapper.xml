@@ -14,6 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select ID, PROID, W_SUBSTATIONMC from W_SUBSTATION
     </sql>
 
+    <select id="getSubByProId" parameterType="String" resultMap="WSubstationResult">
+        <include refid="selectWSubstationVo"/>
+        where PROID = #{pid}
+    </select>
+
     <select id="selectWSubstationList" parameterType="WSubstation" resultMap="WSubstationResult">
         <include refid="selectWSubstationVo"/>
         <where>

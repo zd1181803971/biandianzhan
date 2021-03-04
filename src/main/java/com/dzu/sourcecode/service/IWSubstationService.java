@@ -1,7 +1,6 @@
 package com.dzu.sourcecode.service;
 
 import com.dzu.sourcecode.domain.WSubstation;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -60,4 +59,6 @@ public interface IWSubstationService
      * @return 结果
      */
     public int deleteWSubstationById(String id);
+
+    List<WSubstation> getSubByProId(String pid);
 }

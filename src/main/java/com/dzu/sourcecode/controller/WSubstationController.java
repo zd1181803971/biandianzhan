@@ -25,7 +25,13 @@ public class WSubstationController
      * 查询【请填写功能名称】列表
      */
 
-//    @CrossOrigin
+
+    @GetMapping("/proId/{pid}")
+    public AjaxResult getSubByProId(@PathVariable("pid") String pid){
+        List<WSubstation> subByProId = wSubstationService.getSubByProId(pid);
+        return AjaxResult.success(subByProId);
+    }
+
     @GetMapping("/list")
     public AjaxResult list(WSubstation wSubstation)
     {

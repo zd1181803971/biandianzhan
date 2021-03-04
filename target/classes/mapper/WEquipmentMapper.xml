@@ -19,6 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select OBJ_ID, MC, AZRQ, SBLX, SFZY, SSBM, SFWX, SYSM from W_EQUIPMENT
     </sql>
 
+
+    <select id="getEquBySSBM" parameterType="String" resultMap="WEquipmentResult">
+        <include refid="selectWEquipmentVo"/>
+        where SSBM = #{sid}
+    </select>
+
     <select id="selectWEquipmentList" parameterType="WEquipment" resultMap="WEquipmentResult">
         <include refid="selectWEquipmentVo"/>
         <where>

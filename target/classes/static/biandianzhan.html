@@ -18,6 +18,14 @@
             display: inline-block;
             margin-left: 16px;
         }
+        #leftFoot {
+           padding: 0;
+            margin: 0;
+            position: relative;
+            left: -38px;
+            top: -12px;
+
+        }
         .Heads {
             background-color: #ccecff;
             line-height: 30px;
@@ -66,9 +74,9 @@
         组织结构
     </div>
     <div id="leftFoot">
-        <ul id="leftUL">
-            <li><img src="img/img3.png">国家电网
-                <ul id="company">
+        <ul id="leftUL" style="list-style-type:none">
+            <li><img src="img/img3.png" onclick="showDW()"><span style="font-weight: bolder;font-size: 18px">国家电网</span>
+                <ul id="company" style="list-style-type:none">
                 </ul>
             </li>
         </ul>
@@ -102,7 +110,9 @@
                 <input style="margin-left:16px;width: 40px;height: 30px" type="button" value="重置">
             </div>
             <div class="huiC2">变电站名称</div>
-            <div class="huiC3">留白</div>
+            <div id="subList">
+                <div class="huiC3" >留白</div>
+            </div>
         </div>
         <div id="if2">
             <div>
@@ -129,21 +139,52 @@
     </div>
 </div>
 <script>
+    const Surl = "http://localhost:8081";
+    function showDW(){
+        $("#company").stop().slideToggle();
+    }
+    function getEquBySubID(i){
+        $.ajax({
+            url: Surl+"/equ/ssbmid/"+i,
+            // data: {name: 'jenny'},
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+                console.log(data)
+                // $.each(data.data,function (i,n){
+                //
+                // })
+            }
+        });
+    }
+    function getSubByProId(i){
+        $("#subList").html(null)
+        $.ajax({
+            url: Surl+"/sub/proId/"+i,
+            // data: {name: 'jenny'},
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+                $.each(data.data,function (i,n){
+                  console.log(n.wSubstationmc);
+                  $("#subList").append("<div class=\"huiC3\" onclick=\"getEquBySubID("+i+")\">"+n.wSubstationmc+"</div>")
+                })
+            }
+        });
+    }
     $(function() {
         $.ajax({
-            url: "http://localhost:8081/vice/list",
+            url: Surl+"/vice/list",
             // data: {name: 'jenny'},
             type: "get",
             dataType: "json",
             success: function(data) {
                 console.log(data.data)
                 $.each(data.data,function (i,n){
-                    console.log(i+":"+n.proname)
-                    $("#company").append("<li><img src=\"img/img5.png\">"+n.proname+"</li>")
+                    $("#company").append("<li onclick=\"getSubByProId("+i+")\"><img src=\"img/img5.png\">"+n.proname+"</li>")
                 })
             }
         });
-
     })
 
 

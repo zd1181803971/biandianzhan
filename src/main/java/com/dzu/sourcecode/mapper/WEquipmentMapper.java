@@ -61,4 +61,6 @@ public interface WEquipmentMapper
      * @return 结果
      */
     public int deleteWEquipmentByIds(String[] objIds);
+
+    List<WEquipment> getEquBySSBM(String sid);
 }

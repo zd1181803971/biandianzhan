@@ -15,13 +15,18 @@ import java.util.List;
  * @date 2021-03-03
  */
 @RestController
-@RequestMapping("/system")
+@RequestMapping("/equ")
 public class WEquipmentController
 {
     @Autowired
     private IWEquipmentService wEquipmentService;
 
 
+    @GetMapping("/ssbmid/{sid}")
+    public AjaxResult getEquBySSBM(@PathVariable("sid") String sid){
+        List<WEquipment> equBySSBM = wEquipmentService.getEquBySSBM(sid);
+        return AjaxResult.success(equBySSBM);
+    }
     /**
      * 查询【请填写功能名称】列表
      */
