@@ -22,7 +22,7 @@ public class WSubstationController
     private IWSubstationService wSubstationService;
 
 
-    //根据公司获取其下所有的供电站
+    //根据公司获取其下所有的变电站
     @GetMapping("/proId/{pid}")
     public AjaxResult getSubByProId(@PathVariable("pid") String pid){
         List<WSubstation> subByProId = wSubstationService.getSubByProId(pid);

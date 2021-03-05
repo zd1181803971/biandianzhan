@@ -22,7 +22,7 @@ public class WProvinceController
     private IWProvinceService wProvinceService;
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询
      */
     @GetMapping("/list")
     public AjaxResult list(WProvince wProvince)
@@ -34,7 +34,7 @@ public class WProvinceController
 
 
     /**
-     * 获取【请填写功能名称】详细信息
+     * 获取
      */
     @GetMapping(value = "/{proid}")
     public AjaxResult getInfo(@PathVariable("proid") String proid)
@@ -43,11 +43,21 @@ public class WProvinceController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增
      */
     @PostMapping
     public AjaxResult add(@RequestBody WProvince wProvince)
     {
+        int subID = 0;
+        List<WProvince> wProvinces = wProvinceService.selectWProvinceList(new WProvince());
+        for (WProvince sub: wProvinces
+        ) {
+            if ( Integer.parseInt(sub.getProid()) > subID){
+                subID = Integer.parseInt(sub.getProid());
+            }
+        }
+        wProvince.setProid(String.valueOf(subID+1));
+        wProvince.setParproid("国家电网");
         int i = wProvinceService.insertWProvince(wProvince);
         if (i>0){
             return AjaxResult.success();
@@ -57,7 +67,7 @@ public class WProvinceController
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改
      */
     @PutMapping
     public AjaxResult edit(@RequestBody WProvince wProvince)
@@ -72,7 +82,7 @@ public class WProvinceController
     }
 
     /**
-     * 删除【请填写功能名称】
+     * 删除
      */
 	@DeleteMapping("/{proids}")
     public AjaxResult remove(@PathVariable String[] proids)

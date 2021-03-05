@@ -6,6 +6,7 @@ import com.dzu.sourcecode.utils.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,10 +29,10 @@ public class WEquipmentController
         return AjaxResult.success(equBySSBM);
     }
     /**
-     * 查询【请填写功能名称】列表
+     * 查询
      */
-    @GetMapping("/list")
-    public AjaxResult list(WEquipment wEquipment)
+    @PostMapping("/list")
+    public AjaxResult list(@RequestBody WEquipment wEquipment)
     {
         List<WEquipment> wEquipments = wEquipmentService.selectWEquipmentList(wEquipment);
         return AjaxResult.success(wEquipments);
@@ -51,26 +52,51 @@ public class WEquipmentController
      * 新增
      */
     @PostMapping
-    public void add(@RequestBody WEquipment wEquipment)
+    public AjaxResult add(@RequestBody WEquipment wEquipment)
     {
-         wEquipmentService.insertWEquipment(wEquipment);
+        int subID = 0;
+        List<WEquipment> wEquipments = wEquipmentService.selectWEquipmentList(new WEquipment());
+        for (WEquipment we: wEquipments
+             ) {
+            if ( Integer.parseInt(we.getObjId()) > subID){
+                subID = Integer.parseInt(we.getObjId());
+            }
+        }
+        wEquipment.setObjId(String.valueOf(subID+1));
+        wEquipment.setAzrq(new Date());
+        int i = wEquipmentService.insertWEquipment(wEquipment);
+        if (i>0){
+            return AjaxResult.success();
+        }else {
+            return AjaxResult.error();
+        }
     }
 
     /**
      * 修改
      */
-    @PutMapping
-    public void edit(@RequestBody WEquipment wEquipment)
+    @PostMapping("/updateEqu")
+    public AjaxResult edit(@RequestBody WEquipment wEquipment)
     {
-         wEquipmentService.updateWEquipment(wEquipment);
+        int i = wEquipmentService.updateWEquipment(wEquipment);
+        if (i>0){
+            return AjaxResult.success();
+        }else {
+            return AjaxResult.error();
+        }
     }
 
     /**
-     * 删除【
+     * 删除
      */
-	@DeleteMapping("/{objIds}")
-    public void remove(@PathVariable String[] objIds)
+	@PostMapping("/delEqu/{objId}")
+    public AjaxResult remove(@PathVariable String objId)
     {
-         wEquipmentService.deleteWEquipmentByIds(objIds);
+        int i = wEquipmentService.deleteWEquipmentById(objId);
+        if (i>0){
+            return AjaxResult.success();
+        }else {
+            return AjaxResult.error();
+        }
     }
 }

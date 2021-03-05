@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>index</title>
     <script src="js/jquery-3.4.1.js"></script>
-    <style>
 
+    <style>
         #left {
             width: 300px;
             height: 900px;
@@ -79,7 +79,21 @@
             height: 80px;
             font-size: 23px;
         }
-
+        .huiCAdd span:nth-of-type(1) {
+            margin-right: 20px;
+        }
+        .huiCAdd span:nth-of-type(2) {
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+        .huiCAdd span:nth-of-type(3) {
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+        .inputBigger {
+            width: 80px;
+            height: 30px;
+        }
         .huiC2 {
             background-color: #f8f8f8;
             border-bottom: #6f6f6f 2px solid;
@@ -91,7 +105,7 @@
             font-size: 20px;
         }
         .huiC2Add span {
-            padding-right: 100px;
+            margin-right: 100px;
         }
         .huiC3 {
             margin-top: 2px;
@@ -101,6 +115,7 @@
             width: 795px;
             border: #6f6f6f 2px solid;
             margin-top: 2px;
+            cursor: pointer;
         }
         .huiC3Add div:nth-of-type(1){
             padding-left: 5px;
@@ -126,7 +141,7 @@
         }
         .huiC3Add div:nth-of-type(4){
             /*padding-left: 40px;*/
-            width: 23px;
+            width: 234px;
             display: inline-block;
             border-right: black 1px solid;
             border-bottom: black 1px solid;
@@ -154,6 +169,30 @@
             top: 50px;
             cursor: pointer;
         }
+        .hiddenBtn {
+            width: 180px;
+            height: 70px;
+            cursor: pointer;
+        }
+        .hiddenHead {
+            height: 70px;
+            width: 800px;
+            background-color: #cfcccc;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            display: inline-block;
+        }
+        .hiddenFoot {
+            width: 800px;
+            height: 900px;
+            background-color: #f1f1f1;
+            display: inline-block;
+        }
+        .hiddenInput {
+            background-color: greenyellow
+        }
+
+        .boxshadow1{ box-shadow:inset 0px 0px 1px 1px #cfcccc; }/* 内部阴影 */
         /*#rightHead {*/
         /*    background-color: #ccecff;*/
         /*    font-weight: bolder;*/
@@ -167,7 +206,7 @@
     </div>
     <div id="leftFoot">
         <ul id="leftUL" style="list-style-type:none">
-            <li><img src="img/img3.png"><span style="font-weight: bolder;font-size: 18px;cursor: pointer;" onclick="showDW()">国家电网</span><img class="imgAdd" onclick="addPro()" src="img/img.png">
+            <li><img src="img/img3.png"><span style="font-weight: bolder;font-size: 18px;cursor: pointer;" onclick="showDW()">国家电网</span><img class="imgAdd" onclick="gotoAddPro()" src="img/img.png">
                 <ul id="company" style="list-style-type:none">
                 </ul>
             </li>
@@ -207,18 +246,33 @@
         </div>
         <div id="if2">
             <div>
-                <input class="buttonTwo" type="button" value="新建">
-                <input class="buttonTwo" type="button" value="编辑">
-                <input class="buttonTwo" type="button" value="删除">
+                <input style="margin-left: 2px" class="buttonTwo" type="submit" value="新建" onclick="addEqu()">
+                <input class="buttonTwo" type="submit" value="编辑" onclick="updateEqu()">
+                <input class="buttonTwo" type="submit" value="删除" onclick="delEqu()">
             </div>
             <div class="huiCAdd">
-                <span>设备名称：</span><input type="text">
-                <span>设备类型：</span><select><option value ="null">请选择</option></select>
-                <span>是否再用：</span><select><option value ="null">请选择</option></select>
+                <span>设备名称：</span><input id="sb1" type="text">
+                <span>设备类型：</span><select id="sb2" class="inputBigger">
+                <option value ="0" disabled>请选择</option>
+                <option value="放电">放电</option>
+                <option value="开关">开关</option>
+                <option value="电流互感器">电流互感器</option>
+                <option value="变压器">变压器</option>
+                <option value="刀闸">刀闸</option>
+            </select>
+                <span>是否再用：</span><select id="sb3" class="inputBigger">
+                <option value ="0" disabled>请选择</option>
+                <option value="是">是</option>
+                <option value="否">否</option>
+            </select>
                 <br>
-                <span>是否已维修：</span><select><option value ="null">请选择</option></select>
-                    <input  type="button" value="查询">
-                    <input  type="button" value="重置">
+                <span>是否已维修：</span><select id="sb4" class="inputBigger">
+                <option value ="0" disabled>请选择</option>
+                <option value="是">是</option>
+                <option value="否">否</option>
+            </select>
+                    <input style="width: 130px;height: 40px;margin-left: 30px"  type="submit" value="查询" onclick="getEqu()">
+                    <input style="width: 130px;height: 40px;margin-left: 30px" type="button" value="重置" onclick="getEquBySubID(subId)">
             </div>
 
             <div class="huiC2Add">
@@ -232,39 +286,227 @@
         </div>
     </div>
 </div>
-<div id="hideAddPro" style="display: none">添加公司留白</div>
+<div id="hideAddPro" style="display: none">
+    <div class="hiddenHead">
+        <input class="hiddenBtn" type="submit" value="保存" onclick="addPro()">
+        <input class="hiddenBtn" type="button" value="取消" onclick="quitHidden()">
+    </div>
+    <div class="hiddenFoot">
+        <span style="margin-right: 7px;">网省名称：</span><input id="proname" class="hiddenInput boxshadow1" type="text"><br>
+        <span>*上级单位：</span><input class="hiddenInput boxshadow1"  type="text" value="国家电网" readonly><br>
+        <span style="margin-right: 7px">单位描述：</span><input id="proartdesc" class="hiddenInput boxshadow1" type="text"><br>
+        <span style="margin-right: 23px">用电量：</span><input id="powercon" class="hiddenInput boxshadow1"  type="text"><br>
+        <br>
+    </div>
+</div>
 <script>
+    // const Surl = "http://101.132.138.101:80";
     const Surl = "http://localhost:8081";
     var proId;//当前的公司id
     var subId;//当前供电站id
+    var equId;//当前设备id
 
-    //添加公司
+    function checkByPidOrSidOrEid(){
+        if (proId === undefined){
+            alert("请选择公司后操作")
+            return false;
+        }else  if (subId === undefined){
+            alert("请选择供电站后操作")
+            return false;
+        }else if(equId === undefined){
+            alert("请选择供电设备后操作")
+            return false;
+        }else{
+            return true
+        }
+    }
+    function checkByPidOrSid(){
+        if (proId === undefined){
+            alert("请选择公司后操作")
+            return false;
+        }else  if (subId === undefined){
+            alert("请选择供电站后操作")
+            return false;
+        }else {
+            return true
+        }
+    }
+    function checkByPid(){
+        if (proId === undefined){
+            alert("请选择公司后操作")
+            return false;
+        }else {
+            return true
+        }
+    }
+
+    //查询设备
+    function getEqu(){
+        if (checkByPidOrSid()){
+            var s1 = $("#sb1").val()
+            var s2 = $("#sb2").val()
+            var s3 = $("#sb3").val()
+            var s4 = $("#sb4").val()
+            if (s1 == ''){
+                alert("请输入设备名称")
+            }else {
+                var te = {"mc": s1,"sblx": s2,"sfzy": s3,"ssbm": subId,"sfwx": s4}
+                $.ajax({
+                    url: Surl+"/equ/list",
+                    data: JSON.stringify(te),
+                    type: "post",
+                    contentType:"application/json",
+                    dataType: "json",
+                    success: function(data) {
+                        console.log(data)
+                        $("#equList").html('')
+                        $.each(data.data,function (i,n){
+                            $("#equList").append("<div id="+"shebei"+ n.objId +" class=\"huiC3Add\" onclick=\"equCK("+n.objId+")\">"+"<div>"+n.mc+"</div>"+"<div>"+n.sblx+"</div>"+"<div>"+n.sfzy+"</div>"+"<div>"+n.sfwx+"</div>"+"</div>");
+                        })
+                    }
+                });
+
+            }
+        }
+    }
+    //删除设备
+    function delEqu(){
+        if (checkByPidOrSidOrEid()){
+            $.ajax({
+                url: Surl+"/equ/"+equId,
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+                    if (confirm("确定删除设备："+data.data.mc+"吗")){
+                        $.ajax({
+                            url: Surl+"/equ/delEqu/"+equId,
+                            type: "post",
+                            contentType:"application/json",
+                            dataType: "json",
+                            success: function(data) {
+                                alert("删除成功！")
+                                getEquBySubID(subId)
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    //编辑设备
+    function updateEqu(){
+        if (checkByPidOrSidOrEid()){
+            var s1 = $("#sb1").val()
+            var s2 = $("#sb2").val()
+            var s3 = $("#sb3").val()
+            var s4 = $("#sb4").val()
+            if (s1 == ''){
+                alert("请输入设备名称")
+            }else {
+                var te = {"objId": equId,"mc": s1,"sblx": s2,"sfzy": s3,"ssbm": subId,"sfwx": s4}
+                $.ajax({
+                    url: Surl+"/equ/updateEqu",
+                    data: JSON.stringify(te),
+                    type: "post",
+                    contentType:"application/json",
+                    dataType: "json",
+                    success: function(data) {
+                        alert("修改成功")
+                        getEquBySubID(subId)
+                        $("#sb1").val('')
+                    }
+                });
+            }
+        }
+    }
+    //添加设备
+    function addEqu(){
+        if (checkByPidOrSid()){
+            var s1 = $("#sb1").val()
+            var s2 = $("#sb2").val()
+            var s3 = $("#sb3").val()
+            var s4 = $("#sb4").val()
+            if (s1 == ''){
+                alert("请输入设备名称")
+            }else {
+                var te = {"mc": s1,"sblx": s2,"sfzy": s3,"ssbm": subId,"sfwx": s4}
+                $.ajax({
+                    url: Surl+"/equ",
+                    data: JSON.stringify(te),
+                    type: "post",
+                    contentType:"application/json",
+                    dataType: "json",
+                    success: function(data) {
+                        alert("添加成功")
+                        getEquBySubID(subId)
+                        $("#sb1").val('')
+                    }
+                });
+
+            }
+        }
+
+    }
+
+    //保存==添加公司
     function addPro(){
+        const proname = $("#proname").val()
+        const proartdesc = $("#proartdesc").val()
+        const powercon = $("#powercon").val()
+        if (proname == '' || proartdesc == '' || powercon == ''){
+            alert("请输入全部信息！")
+        }else if (isNaN(Number(powercon))){
+                alert("请输入数字！")
+        }else {
+            var te = {"proname": proname,"proartdesc": proartdesc,"powercon": powercon}
+                $.ajax({
+                    url: Surl+"/vice",
+                    data: JSON.stringify(te),
+                    type: "post",
+                    contentType:"application/json",
+                    dataType: "json",
+                    success: function(data) {
+                        quitHidden()
+                        location.reload();
+                    }
+                });
+
+        }
+    }
+    //取消添加公司
+    function quitHidden(){
+        $("#right").show()
+        $("#hideAddPro").hide()
+
+    }
+    //去添加公司页面
+    function gotoAddPro(){
         $("#right").hide()
         $("#hideAddPro").show()
 
     }
-
     //供电所查询
     function getSubByName(){
-        if (proId === undefined){
-            alert("请先选择公司！")
-        }else{
+        if (checkByPid()) {
             var name = $("#subNameBTN").val()
-            if(name !== null){
+            if (name !== null) {
                 $.ajax({
-                    url: Surl+"/sub/list",
+                    url: Surl + "/sub/list",
                     type: "get",
                     dataType: "json",
-                    success: function(data) {
-                        $.each(data.data,function (i,n){
-                            if (n.wSubstationmc === name && n.proid ===proId){
-                                console.log(n)
+                    success: function (data) {
+                        $.each(data.data, function (i, n) {
+                            if (n.wSubstationmc == name && n.proid == proId) {
+                                $("#subList").html(null)
+                                $("#subList").append("<div id=" + "subCk" + n.id + " class=\"huiC3\" onclick=\"getEquBySubID(" + n.id + ")\">" + n.wSubstationmc + "</div>")
+                            } else {
+                                $("#subList").html(null)
                             }
                         })
                     }
                 });
-            }else {
+            } else {
                 alert("请输入供电站名称！")
             }
         }
@@ -276,13 +518,7 @@
     }
     //删除供电站
     function delSub(){
-        if (proId === undefined){
-            alert("请先选择公司！")
-        }else if(subId === undefined){
-            alert("请先选择供电站！")
-        }
-        else
-        {
+        if (checkByPidOrSid()){
             let SubName = null;
             $.ajax({
                 url: Surl+"/sub/"+subId,
@@ -310,13 +546,7 @@
     }
     //修改供电站
     function  updateSub(){
-        if (proId === undefined){
-            alert("请先选择公司！")
-        }else if(subId === undefined){
-            alert("请先选择供电站！")
-        }
-        else
-        {
+        if (checkByPidOrSid()){
             var subName  =  prompt("请更改变电站名称：")
             var te = {"id": subId,"proid": proId,"wSubstationmc": subName}
             if (subName !== null){
@@ -337,9 +567,7 @@
     }
     //添加供电站
     function addSub(){
-        if (proId === undefined){
-            alert("请先选择公司！")
-        }else {
+        if (checkByPid()){
             var subName  =  prompt("请输入变电站名称：")
             var te = {"proid": proId,"wSubstationmc": subName}
             if (subName !== null){
@@ -361,6 +589,34 @@
 
     function showDW(){
         $("#company").stop().slideToggle();
+    }
+    //供电设备被点击事件
+    function equCK(oId){
+        equId = oId
+        //清空样式，只能选一个
+        $("#equList div").each(function (i,item){
+            $(item).removeClass("subListBK")
+        })
+        //添加选中背景
+        var val = "shebei"+oId
+        if ($("#"+val).hasClass("subListBK")){
+            $("#"+val).removeClass("subListBK")
+        }else{
+            $("#"+val).addClass("subListBK")
+        }
+        $.ajax({
+            url: Surl+"/equ/"+oId,
+            // data: {name: 'jenny'},
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+               $("#sb1").val(data.data.mc)
+               $("#sb2").val(data.data.sblx)
+               $("#sb3").val(data.data.sfzy)
+               $("#sb4").val(data.data.sfwx)
+
+            }
+        });
     }
     //通过供电站获取其下的设备
     function getEquBySubID(i){
@@ -384,7 +640,7 @@
             dataType: "json",
             success: function(data) {
                 $.each(data.data,function (i,n){
-                    $("#equList").append("<div class=\"huiC3Add\">"+"<div>"+n.mc+"</div>"+"<div>"+n.sblx+"</div>"+"<div>"+n.sfzy+"</div>"+"<div>"+n.sfwx+"</div>"+"</div>");
+                    $("#equList").append("<div id="+"shebei"+ n.objId +" class=\"huiC3Add\" onclick=\"equCK("+n.objId+")\">"+"<div>"+n.mc+"</div>"+"<div>"+n.sblx+"</div>"+"<div>"+n.sfzy+"</div>"+"<div>"+n.sfwx+"</div>"+"</div>");
 
                 })
             }
