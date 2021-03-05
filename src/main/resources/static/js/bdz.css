@@ -1,0 +1,188 @@
+#left {
+    width: 300px;
+    height: 900px;
+    border: black 1px solid;
+    float: left;
+}
+#right {
+    width: 1250px;
+    height: 900px;
+    border: black 1px solid;
+    display: inline-block;
+    margin-left: 16px;
+}
+#leftFoot {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    left: -38px;
+    top: -12px;
+
+}
+.Heads {
+    background-color: #ccecff;
+    line-height: 30px;
+    font-weight: bolder;
+    border-bottom: black 1px solid;
+}
+#rightHeadCont {
+    background-color: darkseagreen;
+    border-bottom: black 1px solid;
+}
+.buttonOne {
+    height: 30px;
+    width: 144px;
+    border: aqua 1px solid;
+    cursor: pointer;
+
+}
+.buttonTwo {
+    height: 35px;
+    width: 166px;
+    border: aqua 1px solid;
+    cursor: pointer;
+
+}
+.buttonThree {
+    width: 90px;
+    height: 45px;
+    cursor: pointer;
+}
+#if1 {
+    border: black 1px solid;
+    height: 722px;
+    width: 450px;
+    float: left;
+}
+#if2 {
+    display: inline-block;
+    width: 600px;
+}
+.huiC {
+    border-top: #cfcccc 2px solid;
+    border-bottom: #cfcccc 2px solid;
+    background-color: #f1f1f1;
+}
+.huiCAdd {
+    border-top: #cfcccc 2px solid;
+    border-bottom: #cfcccc 2px solid;
+    background-color: #f1f1f1;
+    width: 797px;
+    height: 80px;
+    font-size: 23px;
+}
+.huiCAdd span:nth-of-type(1) {
+    margin-right: 20px;
+}
+.huiCAdd span:nth-of-type(2) {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.huiCAdd span:nth-of-type(3) {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.inputBigger {
+    width: 80px;
+    height: 30px;
+}
+.huiC2 {
+    background-color: #f8f8f8;
+    border-bottom: #6f6f6f 2px solid;
+}
+.huiC2Add {
+    width: 798px;
+    background-color: #f8f8f8;
+    border-bottom: #6f6f6f 2px solid;
+    font-size: 20px;
+}
+.huiC2Add span {
+    margin-right: 100px;
+}
+.huiC3 {
+    margin-top: 2px;
+    border: #6f6f6f 2px solid;
+}
+.huiC3Add {
+    width: 795px;
+    border: #6f6f6f 2px solid;
+    margin-top: 2px;
+    cursor: pointer;
+}
+.huiC3Add div:nth-of-type(1){
+    padding-left: 5px;
+    width: 184px;
+    display: inline-block;
+    border-right: black 1px solid;
+    border-bottom: black 1px solid;
+
+}
+.huiC3Add div:nth-of-type(2){
+    /*padding-left: 40px;*/
+    width: 184px;
+    display: inline-block;
+    border-right: black 1px solid;
+    border-bottom: black 1px solid;
+}
+.huiC3Add div:nth-of-type(3){
+    /*padding-left: 40px;*/
+    width: 184px;
+    display: inline-block;
+    border-right: black 1px solid;
+    border-bottom: black 1px solid;
+}
+.huiC3Add div:nth-of-type(4){
+    /*padding-left: 40px;*/
+    width: 234px;
+    display: inline-block;
+    border-right: black 1px solid;
+    border-bottom: black 1px solid;
+}
+#company li{
+    width: 120px;
+    cursor: pointer;
+}
+#company li:hover{
+    background-color: #cfcccc;
+}
+#subList div{
+    margin: 3px;
+    cursor: pointer;
+}
+.subListBK {
+    background-color: #6f6f6f;
+
+}
+.imgAdd {
+    width: 30px;
+    height: 23px;
+    position: fixed;
+    left: 270px;
+    top: 50px;
+    cursor: pointer;
+}
+.hiddenBtn {
+    width: 180px;
+    height: 70px;
+    cursor: pointer;
+}
+.hiddenHead {
+    height: 70px;
+    width: 800px;
+    background-color: #cfcccc;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    display: inline-block;
+}
+.hiddenFoot {
+    width: 800px;
+    height: 900px;
+    background-color: #f1f1f1;
+    display: inline-block;
+}
+.hiddenInput {
+    background-color: greenyellow
+}
+
+.boxshadow1{ box-shadow:inset 0px 0px 1px 1px #cfcccc; }/* 内部阴影 */
+
