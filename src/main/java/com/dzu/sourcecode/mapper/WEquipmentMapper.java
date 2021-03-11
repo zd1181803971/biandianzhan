@@ -1,7 +1,7 @@
 package com.dzu.sourcecode.mapper;
 
 import com.dzu.sourcecode.domain.WEquipment;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author zhaodong
  * @date 2021-03-03
  */
-@Repository
+@Mapper
 public interface WEquipmentMapper
 {
     /**

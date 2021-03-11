@@ -1,5 +1,5 @@
 
-const Surl = "http://101.132.138.101:80";
+const Surl = "http://127.0.0.1:8081";
 var proId;//当前的公司id
 var subId;//当前供电站id
 var equId;//当前设备id
